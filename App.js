@@ -45,22 +45,22 @@ sendData = async (text) => {
 
 formatResults = () => {
   const percent = Math.floor(this.state.feedback * 100)
-  const results = { mood: '', percent: 0}
+  const results = {}
   if (percent < 40) {
     results.mood = "NEGATIVE"
     results.color = ""
     results.percent = Math.floor(percent / 40 * 100)
-    results.image = ''
+    results.image = './public/negativeEmoji.png'
   } else if (percent > 40 && percent < 60) {
     results.mood = "NEUTRAL"
     results.color = ""
     results.percent =  Math.floor(percent / 60 * 100)
-    results.image = ''
+    results.image = './public/neutralEmoji.png'
   } else {
     results.mood = "POSITIVE"
     results.color = ""
     results.percent =  Math.floor(percent)
-    results.image = ''
+    results.image = './public/positiveEmoji.png'
   }
   return results
 }
@@ -90,7 +90,7 @@ formatResults = () => {
                 <Text style={styles.mood}>{results.mood}</Text>
               </View>
               <View style={[styles.right]}>
-                <Text>Hello from right</Text>
+                <Image source={require(results.image)}/>
               </View>
               </View>
             <View style={[styles.bottom]}>
