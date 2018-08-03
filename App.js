@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, Alert } from 'react-native';
 import { Container, Header, Content, Input, Item, Form, Textarea, Button } from 'native-base';
 import axios from 'axios'
 import Modal from 'react-native-modalbox'
@@ -13,7 +13,15 @@ export default class App extends React.Component {
     }
   }
 
-  
+handleOnPress = async () => {
+  if(this.state.text){
+  await this.sendData(this.state.text)
+  this.refs.modal.open()
+  } else {
+    Alert.alert("Hold up!","Please enter text!")
+  }
+}
+
 sendData = async (text) => {
   try{
   const data = await axios.post(
@@ -39,10 +47,17 @@ sendData = async (text) => {
         <Image source={require('./public/subText_logo.png')} style={styles.logo}/>
           <Form rounded style={styles.form}> 
             <Textarea rowSpan={8} style={styles.textArea} placeholder="Find out what they think you'll mean" onChangeText={(text) => this.setState({text})}/>
-            <Button block info style={styles.button} onPress={()=>this.sendData(this.state.text)}>
+            <Button block info style={styles.button} onPress={this.handleOnPress}>
               <Text style={styles.buttonText}>Generate Report</Text>
             </Button>
           </Form>
+          <Modal
+            style={[styles.modal, styles.modal1]}
+            ref={"modal"}
+            coverScreen={true}
+            >
+            <Text>{this.state.feedback}</Text>
+          </Modal>
       </View>
     );
   }
@@ -70,10 +85,15 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   button: {
-    
+
   },
   buttonText: {
     color: 'white',
     marginHorizontal: 40
+  },
+  modal: {
+    justifyContent: 'center',
+    alignItems: 'center',
+
   }
 });
