@@ -2,12 +2,14 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
 import { Container, Header, Content, Input, Item, Form, Textarea, Button } from 'native-base';
 import axios from 'axios'
+import Modal from 'react-native-modalbox'
 
 export default class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      text: ''
+      text: '',
+      feedback: {}
     }
   }
 
@@ -21,7 +23,10 @@ sendData = async (text) => {
       'data': text
     })
   )
-  console.log(data)
+
+  this.setState({
+    feedback: data.data.results,
+  })
   } catch (error){
     console.error(error)
   }
