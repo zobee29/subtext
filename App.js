@@ -12,33 +12,9 @@ export default class App extends React.Component {
     this.state = {
       text: '',
       feedback: {},
+      mood: ''
     }
   }
-
-  // componentWillMount () {
-  //   this.keyboardDidShowListener = DeviceEventEmitter.addListener('keyboardDidShow', this.keyboardDidShow.bind(this))
-  //   this.keyboardDidHideListener = DeviceEventEmitter.addListener('keyboardDidHide', this.keyboardDidHide.bind(this))
-  // }
-
-  // componentWillUnmount () {
-  //   this.keyboardDidShowListener.remove()
-  //   this.keyboardDidHideListener.remove()
-  // }
-
-  // keyboardDidShow (e) {
-  //   let newSize = Dimensions.get('window').height - e.endCoordinates.height
-  //   this.setState({
-  //     visibleHeight: newSize,
-  //     topLogo: {width: 100, height: 70}
-  //   })
-  // }
-
-  // keyboardDidHide (e) {
-  //   this.setState({
-  //     visibleHeight: Dimensions.get('window').height,
-  //     topLogo: {width: Dimensions.get('window').width}
-  //   })
-  // }  
 
 handleOnPress = async () => {
   if(this.state.text){
@@ -67,8 +43,29 @@ sendData = async (text) => {
   }
 }
 
+formatResults = () => {
+  const percent = Math.floor(this.state.feedback * 100)
+  if (percent < 40) {
+    this.setState({
+      mood: 'NEGATIVE'
+    })
+    return Math.floor(percent / 40 * 100)
+  } else if (percent > 40 && percent < 60) {
+    this.setState({
+      mood: 'NEUTRAL'
+    })
+    return Math.floor(percent / 60 * 100)
+  } else {
+    this.setState({
+      mood: 'POSITIVE'
+    })
+    return Math.floor(percent)
+  }
+}
+
   render() {
     console.log('Our apps state', this.state)
+    const percent = this.formatResults()
     return (
       // <ScrollView keyboardShouldPersistTaps='always'>
         <View style={styles.container}>
@@ -87,7 +84,8 @@ sendData = async (text) => {
             {/* <Text>{this.state.feedback}</Text> */}
             <View style={[styles.top]}>
               <View style={[styles.left]}>
-                <Text>Hello from left</Text>
+                <Text>{percent}%</Text>
+                <Text>{this.state.mood}</Text>
               </View>
               <View style={[styles.right]}>
                 <Text>Hello from right</Text>
@@ -139,17 +137,21 @@ const styles = StyleSheet.create({
   },
 
   modal: {
+    height: 500,
+    width: 400
   },
 
   top: {
-    flex: 1,
+    flex: 3,
+    flexDirection: 'row'
   },
 
   left: {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'green',
-    flex: 1
+    flex: 1,
+    flexDirection: 'column'
   },
 
   right: {
@@ -163,6 +165,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'brown',
-    flex: 1
+    flex: 4
   }
 });
