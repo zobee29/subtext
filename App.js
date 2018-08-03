@@ -45,27 +45,29 @@ sendData = async (text) => {
 
 formatResults = () => {
   const percent = Math.floor(this.state.feedback * 100)
+  const results = { mood: '', percent: 0}
   if (percent < 40) {
-    this.setState({
-      mood: 'NEGATIVE'
-    })
-    return Math.floor(percent / 40 * 100)
+    results.mood = "NEGATIVE"
+    results.color = ""
+    results.percent = Math.floor(percent / 40 * 100)
+    results.image = ''
   } else if (percent > 40 && percent < 60) {
-    this.setState({
-      mood: 'NEUTRAL'
-    })
-    return Math.floor(percent / 60 * 100)
+    results.mood = "NEUTRAL"
+    results.color = ""
+    results.percent =  Math.floor(percent / 60 * 100)
+    results.image = ''
   } else {
-    this.setState({
-      mood: 'POSITIVE'
-    })
-    return Math.floor(percent)
+    results.mood = "POSITIVE"
+    results.color = ""
+    results.percent =  Math.floor(percent)
+    results.image = ''
   }
+  return results
 }
 
   render() {
     console.log('Our apps state', this.state)
-    const percent = this.formatResults()
+    const results = this.formatResults()
     return (
       // <ScrollView keyboardShouldPersistTaps='always'>
         <View style={styles.container}>
@@ -83,9 +85,9 @@ formatResults = () => {
             >
             {/* <Text>{this.state.feedback}</Text> */}
             <View style={[styles.top]}>
-              <View style={[styles.left]}>
-                <Text>{percent}%</Text>
-                <Text>{this.state.mood}</Text>
+              <View style={[styles.left, {backgroundColor: results.color}]}>
+                <Text style={styles.percent}>{results.percent}%</Text>
+                <Text style={styles.mood}>{results.mood}</Text>
               </View>
               <View style={[styles.right]}>
                 <Text>Hello from right</Text>
@@ -138,7 +140,8 @@ const styles = StyleSheet.create({
 
   modal: {
     height: 500,
-    width: 400
+    width: 400,
+    backgroundColor: 'brown'
   },
 
   top: {
@@ -149,7 +152,7 @@ const styles = StyleSheet.create({
   left: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'green',
+    // backgroundColor: 'green',
     flex: 1,
     flexDirection: 'column'
   },
@@ -166,5 +169,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'brown',
     flex: 4
+  },
+
+  percent: {
+    fontSize: 70,
+    color: 'white',
+    marginLeft: 15
+  },
+
+  mood: {
+    fontSize: 30,
+    color: 'white',
+    marginLeft: 15
   }
 });
