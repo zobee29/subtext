@@ -45,22 +45,22 @@ sendData = async (text) => {
 
 formatResults = () => {
   const percent = Math.floor(this.state.feedback * 100)
-  const results = { mood: '', percent: 0}
+  const results = {}
   if (percent < 40) {
     results.mood = "NEGATIVE"
-    results.color = ""
+    results.color = "red"
     results.percent = Math.floor(percent / 40 * 100)
-    results.image = ''
+    results.image = require("./public/negativeEmoji.png")
   } else if (percent > 40 && percent < 60) {
     results.mood = "NEUTRAL"
-    results.color = ""
+    results.color = "grey"
     results.percent =  Math.floor(percent / 60 * 100)
-    results.image = ''
+    results.image = require("./public/neutralEmoji.png")
   } else {
     results.mood = "POSITIVE"
-    results.color = ""
+    results.color = "green"
     results.percent =  Math.floor(percent)
-    results.image = ''
+    results.image = require("./public/positiveEmoji.png")
   }
   return results
 }
@@ -90,11 +90,10 @@ formatResults = () => {
                 <Text style={styles.mood}>{results.mood}</Text>
               </View>
               <View style={[styles.right]}>
-                <Text>Hello from right</Text>
+                <Image source={results.image} style={styles.emoji}/>
               </View>
               </View>
             <View style={[styles.bottom]}>
-              <Text>Hello from bottom</Text>
             </View>
           </Modal>
            <KeyboardSpacer /> 
@@ -181,5 +180,10 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: 'white',
     marginLeft: 15
+  },
+
+  emoji: {
+    height: 175,
+    width: 175
   }
 });
