@@ -4,7 +4,6 @@ import { Container, Header, Content, Input, Item, Form, Textarea, Button } from 
 import axios from 'axios'
 import Modal from 'react-native-modalbox'
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import styles from './public/'
 
 
 export default class App extends React.Component {
