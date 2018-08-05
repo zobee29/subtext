@@ -4,7 +4,7 @@ import { Container, Header, Content, Input, Item, Form, Textarea, Button } from 
 import axios from 'axios'
 import Modal from 'react-native-modalbox'
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import styles from './public/'
+import * as Animatable from 'react-native-animatable';
 
 
 export default class App extends React.Component {
@@ -17,39 +17,48 @@ export default class App extends React.Component {
     }
   }
 
-handleOnPress = async () => {
-  if(this.state.text){
-  await this.sendData(this.state.text)
-  this.refs.modal.open()
-  } else {
-    Alert.alert("Hold up!","Please enter text!")
+  
+  handleOnPress = async () => {
+    if(this.state.text){
+      await this.sendData(this.state.text)
+      this.refs.modal.open()
+    } else {
+      Alert.alert("Hold up!","Please enter text!")
+    }
   }
-}
-
-sendData = async (text) => {
-  try{
-  const data = await axios.post(
-    'https://apiv2.indico.io/sentimenthq',
-    JSON.stringify({
-      'api_key': "3f58c49779f1a00d19e00cc8feaed15a",
-      'data': text
-    })
-  )
-
-  this.setState({
-    feedback: data.data.results,
-  })
-  } catch (error){
-    console.error(error)
+  
+  sendData = async (text) => {
+    try{
+      const data = await axios.post(
+        'https://apiv2.indico.io/sentimenthq',
+        JSON.stringify({
+          'api_key': "3f58c49779f1a00d19e00cc8feaed15a",
+          'data': text
+        })
+      )
+      
+      this.setState({
+        feedback: data.data.results,
+      })
+    } catch (error){
+      console.error(error)
+    }
   }
-}
+  
+  idiotCheck = (text) => {
+    if(text.toLowerCase().search(" u ") > -1 && text.toLowerCase().search(" y ")) { return "\u2022 'Y' 'u' have to talk like this? Maybe write the words out. \n"}
+      else if(text.toLowerCase().search(" u ") > -1) {return "\u2022 'U' know better than to talk like that, maybe write 'you' instead. \n"}
+      else if(text.toLowerCase().search(" y ") > -1) {return "\u2022 'Y' do you talk like this? Maybe write 'why' instead \n"}
+      else return ""
+  }
 
 shortenText = (text) => {
-  if(text.length >= 60) text = text.slice(0, 60)
+  if(text.length >= 60) {text = text.slice(0, 60)
   text = text.slice(0, text.lastIndexOf(" "))
-  text = text + "..."
+  text = text + "..."}
   return text
 }
+
 
 formatResults = () => {
   const percent = Math.floor(this.state.feedback * 100)
@@ -97,7 +106,7 @@ likeCount = (text) => {
      if(data[i].includes('like')) numOfLikes++
   }
   if(numOfLikes >= 3) {
-    return `\u2022 You, like, have used the word like ${numOfLikes} times in this text. \n`
+    return `\u2022 You, like, have used the word "like" ${numOfLikes} times in this text. \n`
   } else return ""
 }
 
@@ -111,7 +120,8 @@ adviceGenerator = (text, results) => {
     else if(text.search("love") > -1){lovehate = "\u2022 Love is a bit of a strong word though, do you really mean it? \n"}
   let exclaim = this.tooManyExclamationPoints(text)
   let likelike = this.likeCount(text)
-  return("\u2022 " + "This text has " + adjectiveMood + results.mood.toLowerCase() + " tone to it. \n" + lovehate + exclaim + likelike) 
+  let whyyou = this.idiotCheck(text)
+  return("\u2022 " + "This text has " + adjectiveMood + results.mood.toLowerCase() + " tone to it. \n" + lovehate + exclaim + likelike + whyyou) 
 }
 
   render() {
@@ -122,13 +132,19 @@ adviceGenerator = (text, results) => {
         <View style={styles.container}>
         <Image source={require('./public/subText_logo.png')} style={styles.logo}/>
           <Form rounded style={styles.form}> 
-            <TextInput style={styles.textArea} multiline={true} placeholder="Find out what they think you'll mean" onChangeText={(text) => this.setState({text})} value={this.state.text}/>
+            <Animatable.View animation="slideInLeft">
+              <TextInput style={styles.textArea} multiline={true} placeholder="Find out what they think you'll mean" onChangeText={(text) => this.setState({text})} value={this.state.text}/>
+            </Animatable.View>
+            <Animatable.View animation="fadeIn">
             <Button block info style={styles.button} onPress={this.handleOnPress}>
               <Text style={styles.buttonText}>Generate Report</Text>
             </Button>
+            </Animatable.View>
+            <Animatable.View animation="fadeIn">
             <Button block info style={styles.button} onPress={() => this.setState({text: ''})}>
               <Text style={styles.buttonText}>Clear</Text>
             </Button>
+            </Animatable.View>
           </Form>
           <Modal
             style={[styles.modal]}
