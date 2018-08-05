@@ -133,7 +133,7 @@ adviceGenerator = (text, results) => {
         <Image source={require('./public/subText_logo.png')} style={styles.logo}/>
           <Form rounded style={styles.form}> 
             <Animatable.View animation="slideInLeft">
-              <TextInput style={styles.textArea} multiline={true} placeholder="Find out what they think you'll mean" onChangeText={(text) => this.setState({text})} value={this.state.text}/>
+              <TextInput style={styles.textArea} multiline={true} placeholder="How do you come across?" onChangeText={(text) => this.setState({text})} value={this.state.text}/>
             </Animatable.View>
             <Animatable.View animation="fadeIn">
             <Button block info style={styles.button} onPress={this.handleOnPress}>
