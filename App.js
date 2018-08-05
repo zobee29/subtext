@@ -76,6 +76,7 @@ tooManyExclamationPoints = (text) => {
     return '\u2022 Wow! you have used almost as many exclamation points as there are words in that text. Are you really that excited? \n'
   } else {return ''}
 }
+
 likeCount = (text) => {
   let numOfLikes = 0
   const data = text.toLowerCase().split(' ')
@@ -88,14 +89,13 @@ likeCount = (text) => {
 }
 
 adviceGenerator = (text, results) => {
-  let adjectiveMood = "a "
-  let lovehate = ""
-  if(results.percent >= 90) adjectiveMood = "a very "
-  else if ( results.percent <= 50 ) adjectiveMood = "a somewhat "
-  if(text.toLowerCase().search("hate") > -1 && text.search("love") > -1){lovehate = "\u2022 Love and hate are strong words. Do you really mean it? \n"}
-    else if(text.toLowerCase().search("hate") > -1){lovehate = "\u2022 Hate is a bit of a strong word though, do you really mean it? \n"}
-    else if(text.toLowerCase().search("love") > -1){lovehate = "\u2022 Love is a bit of a strong word though, do you really mean it? \n"}
-
+  let adjectiveMood = 'a '
+  let lovehate = ''
+  if (results.percent >= 90) adjectiveMood = 'a very '
+  else if ( results.percent <= 50 ) adjectiveMood = 'a somewhat '
+  if (text.search('hate') > -1 && text.search('love') > -1){lovehate = '\u2022 Love and hate are strong words. Do you really mean it? \n'}
+    else if (text.search('hate') > -1){lovehate = '\u2022 Hate is a bit of a strong word though, do you really mean it? \n'}
+    else if (text.search('love') > -1){lovehate = '\u2022 Love is a bit of a strong word though, do you really mean it? \n'}
   let exclaim = this.tooManyExclamationPoints(text)
   let likelike = this.likeCount(text)
   let whyyou = this.idiotCheck(text)
@@ -135,10 +135,10 @@ formatResults = () => {
     const results = this.formatResults()
     return (
         <View style={styles.container}>
-        <Image source={require('./public/subText_logo.png')} style={styles.logo}/>
-          <Form rounded style={styles.form}> 
+        <Image source={require('./public/subText_logo.png')} style={styles.logo} />
+          <Form rounded style={styles.form}>
             <Animatable.View animation="slideInLeft" delay={1000}>
-              <TextInput style={styles.textArea} multiline={true} placeholder="How do you come across?" onChangeText={(text) => this.setState({text})} value={this.state.text}/>
+              <TextInput style={styles.textArea} multiline={true} placeholder="Is this text a good idea?" onChangeText={(text) => this.setState({text})} value={this.state.text}/>
             </Animatable.View>
             <Animatable.View animation="fadeIn" delay={1000}>
             <Button block info style={styles.button} onPress={this.handleOnPress}>
