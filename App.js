@@ -91,10 +91,10 @@ formatResults = () => {
 tooManyExclamationPoints = (text) => {
   let numOfExclamation = 0
   const amountOfWords = text.split(' ').length
-  for(let i = 0; i < text.length; i++) {
-    if(text[i] === '!') numOfExclamation++  
+  for (let i = 0; i < text.length; i++) {
+    if (text[i] === '!') numOfExclamation++  
   }
-  if(numOfExclamation >= amountOfWords - 1 && numOfExclamation >= 3) {
+  if (numOfExclamation >= amountOfWords - 1 && numOfExclamation >= 3) {
     return "\u2022 Wow! you have used almost as many exclamation points as there are words in that text. Are you really that excited? \n"
   } else return ""
 } 
@@ -115,9 +115,9 @@ adviceGenerator = (text, results) => {
   let lovehate = ""
   if(results.percent >= 90) adjectiveMood = "a very "
   else if ( results.percent <= 50 ) adjectiveMood = "a somewhat "
-  if(text.search("hate") > -1 && text.search("love") > -1){lovehate = "\u2022 Love and hate are strong words. Do you really mean it? \n"}
-    else if(text.search("hate") > -1){lovehate = "\u2022 Hate is a bit of a strong word though, do you really mean it? \n"}
-    else if(text.search("love") > -1){lovehate = "\u2022 Love is a bit of a strong word though, do you really mean it? \n"}
+  if(text.toLowerCase().search("hate") > -1 && text.search("love") > -1){lovehate = "\u2022 Love and hate are strong words. Do you really mean it? \n"}
+    else if(text.toLowerCase().search("hate") > -1){lovehate = "\u2022 Hate is a bit of a strong word though, do you really mean it? \n"}
+    else if(text.toLowerCase().search("love") > -1){lovehate = "\u2022 Love is a bit of a strong word though, do you really mean it? \n"}
   let exclaim = this.tooManyExclamationPoints(text)
   let likelike = this.likeCount(text)
   let whyyou = this.idiotCheck(text)
