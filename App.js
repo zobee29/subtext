@@ -17,16 +17,19 @@ export default class App extends React.Component {
     }
   }
 
-  
+  //On Press
+
   handleOnPress = async () => {
     if(this.state.text){
       await this.sendData(this.state.text)
       this.refs.modal.open()
     } else {
-      Alert.alert("Hold up!","Please enter text!")
+      Alert.alert('Hold up!', 'Please enter text!')
     }
   }
-  
+
+  //API Axios request
+
   sendData = async (text) => {
     try{
       const data = await axios.post(
@@ -36,7 +39,7 @@ export default class App extends React.Component {
           'data': text
         })
       )
-      
+
       this.setState({
         feedback: data.data.results,
       })
@@ -44,70 +47,44 @@ export default class App extends React.Component {
       console.error(error)
     }
   }
-  
-  idiotCheck = (text) => {
-    if(text.toLowerCase().search(" u ") > -1 && text.toLowerCase().search(" y ")) { return "\u2022 'Y' 'u' have to talk like this? Maybe write the words out. \n"}
-      else if(text.toLowerCase().search(" u ") > -1) {return "\u2022 'U' know better than to talk like that, maybe write 'you' instead. \n"}
-      else if(text.toLowerCase().search(" y ") > -1) {return "\u2022 'Y' do you talk like this? Maybe write 'why' instead \n"}
-      else return ""
-  }
 
-shortenText = (text) => {
-  if(text.length >= 60) {text = text.slice(0, 60)
-  text = text.slice(0, text.lastIndexOf(" "))
-  text = text + "..."}
-  return text
+//Advice Checks
+
+idiotCheck = (text) => {
+  if (text.toLowerCase().search(' u ') > -1 && text.toLowerCase().search(' y ')) { return "\u2022 'Y' 'u' have to talk like this? Maybe write the words out. \n"}
+    else if (text.toLowerCase().search(' u ') > -1) {return "\u2022 'U' know better than to talk like that! Maybe write 'you' instead. \n"}
+    else if (text.toLowerCase().search(' y ') > -1) {return "\u2022 'Y' do you talk like this? Maybe write 'why' instead \n"}
+    else {return ''}
 }
 
-
-formatResults = () => {
-  const percent = Math.floor(this.state.feedback * 100)
-  const results = {}
-  if (percent < 40) {
-    results.mood = "NEGATIVE"
-    results.color = "red"
-    results.emojiColor = "#ff3333"
-    results.percent = Math.floor(percent / 40 * 100)
-    results.image = require("./public/negativeEmoji.png")
-  } else if (percent > 40 && percent < 60) {
-    results.mood = "NEUTRAL"
-    results.color = "grey"
-    results.emojiColor = "lightgrey"
-    results.percent =  Math.floor(percent / 60 * 100)
-    results.image = require("./public/neutralEmoji.png")
-  } else {
-    results.mood = "POSITIVE"
-    results.color = "green"
-    results.emojiColor = "lightgreen"
-    results.percent =  Math.floor(percent)
-    results.image = require("./public/positiveEmoji.png")
+shortenText = (text) => {
+  if (text.length >= 60) {
+    text = text.slice(0, 60)
+    text = text.slice(0, text.lastIndexOf(' '))
+    text = text + '...'
   }
-
-  results.input  = this.shortenText(this.state.text)
-  results.text = this.adviceGenerator(this.state.text, results)
-  return results
+  return text
 }
 
 tooManyExclamationPoints = (text) => {
   let numOfExclamation = 0
   const amountOfWords = text.split(' ').length
   for (let i = 0; i < text.length; i++) {
-    if (text[i] === '!') numOfExclamation++  
+    if (text[i] === '!') numOfExclamation++
   }
   if (numOfExclamation >= amountOfWords - 1 && numOfExclamation >= 3) {
-    return "\u2022 Wow! you have used almost as many exclamation points as there are words in that text. Are you really that excited? \n"
-  } else return ""
-} 
-
+    return '\u2022 Wow! you have used almost as many exclamation points as there are words in that text. Are you really that excited? \n'
+  } else {return ''}
+}
 likeCount = (text) => {
   let numOfLikes = 0
   const data = text.toLowerCase().split(' ')
-  for(let i = 0; i < data.length; i++) {
-     if(data[i].includes('like')) numOfLikes++
+  for (let i = 0; i < data.length; i++) {
+     if (data[i].includes('like')) numOfLikes++
   }
-  if(numOfLikes >= 3) {
+  if (numOfLikes >= 3) {
     return `\u2022 You, like, have used the word "like" ${numOfLikes} times in this text. \n`
-  } else return ""
+  } else {return ''}  
 }
 
 adviceGenerator = (text, results) => {
@@ -118,40 +95,68 @@ adviceGenerator = (text, results) => {
   if(text.toLowerCase().search("hate") > -1 && text.search("love") > -1){lovehate = "\u2022 Love and hate are strong words. Do you really mean it? \n"}
     else if(text.toLowerCase().search("hate") > -1){lovehate = "\u2022 Hate is a bit of a strong word though, do you really mean it? \n"}
     else if(text.toLowerCase().search("love") > -1){lovehate = "\u2022 Love is a bit of a strong word though, do you really mean it? \n"}
+
   let exclaim = this.tooManyExclamationPoints(text)
   let likelike = this.likeCount(text)
   let whyyou = this.idiotCheck(text)
-  return("\u2022 " + "This text has " + adjectiveMood + results.mood.toLowerCase() + " tone to it. \n" + lovehate + exclaim + likelike + whyyou) 
+  return ('\u2022 This text has ' + adjectiveMood + results.mood.toLowerCase() + ' tone to it. \n' + lovehate + exclaim + likelike + whyyou) 
 }
 
+formatResults = () => {
+  const percent = Math.floor(this.state.feedback * 100)
+  const results = {}
+  if (percent < 40) {
+    results.mood = 'NEGATIVE'
+    results.color = 'red'
+    results.emojiColor = '#ff3333'
+    results.percent = Math.floor(percent / 40 * 100)
+    results.image = require('./public/negativeEmoji.png')
+  } else if (percent > 40 && percent < 60) {
+    results.mood = 'NEUTRAL'
+    results.color = 'grey'
+    results.emojiColor = 'lightgrey'
+    results.percent =  Math.floor(percent / 60 * 100)
+    results.image = require('./public/neutralEmoji.png')
+  } else {
+    results.mood = 'POSITIVE'
+    results.color = 'green'
+    results.emojiColor = 'lightgreen'
+    results.percent =  Math.floor(percent)
+    results.image = require('./public/positiveEmoji.png')
+  }
+
+  results.input  = this.shortenText(this.state.text)
+  results.text = this.adviceGenerator(this.state.text, results)
+  return results
+}
+
+
   render() {
-    console.log('Our apps state', this.state)
     const results = this.formatResults()
     return (
-      // <ScrollView keyboardShouldPersistTaps='always'>
         <View style={styles.container}>
         <Image source={require('./public/subText_logo.png')} style={styles.logo}/>
           <Form rounded style={styles.form}> 
-            <Animatable.View animation="slideInLeft">
+            <Animatable.View animation="slideInLeft" delay={1000}>
               <TextInput style={styles.textArea} multiline={true} placeholder="How do you come across?" onChangeText={(text) => this.setState({text})} value={this.state.text}/>
             </Animatable.View>
-            <Animatable.View animation="fadeIn">
+            <Animatable.View animation="fadeIn" delay={1000}>
             <Button block info style={styles.button} onPress={this.handleOnPress}>
               <Text style={styles.buttonText}>Generate Report</Text>
             </Button>
             </Animatable.View>
-            <Animatable.View animation="fadeIn">
+            <Animatable.View animation="fadeIn" delay={1000}>
             <Button block info style={styles.button} onPress={() => this.setState({text: ''})}>
               <Text style={styles.buttonText}>Clear</Text>
             </Button>
             </Animatable.View>
           </Form>
+          
           <Modal
             style={[styles.modal]}
-            ref={"modal"}
+            ref={'modal'}
             coverScreen={true}
             >
-            {/* <Text>{this.state.feedback}</Text> */}
             <View style={[styles.top]}>
               <View style={[styles.left, {backgroundColor: results.color}]}>
                 <Text style={styles.percent}>{results.percent}%</Text>
@@ -166,14 +171,14 @@ adviceGenerator = (text, results) => {
               <Text style={styles.resultsText}>{results.text}</Text>
             </View>
           </Modal>
-           <KeyboardSpacer /> 
-          </View>
-      // </ScrollView>
+           <KeyboardSpacer />
+        </View>
     );
   }
 }
- 
+
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     flexDirection: 'column',
