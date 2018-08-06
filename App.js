@@ -5,6 +5,10 @@ import axios from 'axios'
 import Modal from 'react-native-modalbox'
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import * as Animatable from 'react-native-animatable';
+// import Tts from 'react-native-tts';
+// const Speech = require('react-native-speech');
+// const Speech = require('react-native-speech')
+import {Speech} from 'expo'
 
 
 export default class App extends React.Component {
@@ -25,6 +29,12 @@ export default class App extends React.Component {
     } else {
       Alert.alert('Hold up!', 'Please enter text!')
     }
+  }
+
+  textToSpeech = () => {
+    Speech.speak(this.state.text, {
+      language: 'en'
+    })
   }
 
   //API Axios request
@@ -148,6 +158,11 @@ formatResults = () => {
             <Animatable.View animation="fadeIn" delay={1000}>
               <Button block info style={styles.button} onPress={() => this.setState({text: ''})}>
                 <Text style={styles.buttonText}>Clear</Text>
+              </Button>
+            </Animatable.View>
+            <Animatable.View animation="fadeIn" delay={1000}>
+              <Button block info style={styles.button} onPress={this.textToSpeech}>
+                <Text style={styles.buttonText}>How Do You Sound</Text>
               </Button>
             </Animatable.View>
           </Form>
