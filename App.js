@@ -33,7 +33,8 @@ export default class App extends React.Component {
 
   textToSpeech = () => {
     Speech.speak(this.state.text, {
-      language: 'en'
+      language: 'en',
+      pitch: 1.3
     })
   }
 
@@ -156,13 +157,13 @@ formatResults = () => {
             </Button>
             </Animatable.View>
             <Animatable.View animation="fadeIn" delay={1000}>
-              <Button block info style={styles.button} onPress={() => this.setState({text: ''})}>
-                <Text style={styles.buttonText}>Clear</Text>
+              <Button block info style={styles.button} onPress={this.textToSpeech}>
+                <Text style={styles.buttonText}>How Do You Sound</Text>
               </Button>
             </Animatable.View>
             <Animatable.View animation="fadeIn" delay={1000}>
-              <Button block info style={styles.button} onPress={this.textToSpeech}>
-                <Text style={styles.buttonText}>How Do You Sound</Text>
+              <Button block info style={styles.button} onPress={() => this.setState({text: ''})}>
+                <Text style={styles.buttonText}>Clear</Text>
               </Button>
             </Animatable.View>
           </Form>
