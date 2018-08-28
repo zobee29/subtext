@@ -29,6 +29,7 @@
 [example2]: https://postimg.cc/image/hm62cgbqj/ "Negative Input"
 [example3]: https://postimg.cc/image/ocmjlw6m3/ "Neutral Input"
 [example4]: https://postimg.cc/image/qh6wmzfyj/ "Positive Input"
+
 ![User Input][example1]
 ![Negative Input][example2]
 ![Neutral Input][example3]
