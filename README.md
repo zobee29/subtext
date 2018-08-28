@@ -1,3 +1,5 @@
+[logo]: https://github.com/Soul-Potato/subtext/blob/master/public/subText_logo.png "SubText Logo"
+
 ## Table of Contents
 
 * [Description](#SubText)
@@ -6,7 +8,6 @@
 
 ![alt text][logo]
 
-[logo]: https://github.com/Soul-Potato/subtext/blob/master/public/subText_logo.png "SubText Logo"
 
 # SubText
 
