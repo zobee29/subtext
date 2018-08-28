@@ -28,7 +28,7 @@
 [example1]: https://s33.postimg.cc/x7ndwefz3/Screenshot_20180828-130508.png "User Input"
 [example2]: https://s33.postimg.cc/ibouotca7/Screenshot_20180828-130549.png "Negative Input"
 [example3]: https://s33.postimg.cc/h9eo6a16n/Screenshot_20180828-130612.png "Neutral Input"
-[example4]: https://s33.postimg.cc/h9eo6a16n/Screenshot_20180828-130612.png "Positive Input"
+[example4]: https://s33.postimg.cc/qh6wmzfyn/Screenshot_20180828-130533.png "Positive Input"
 
 ![User Input][example1]
 ![Negative Input][example2]
