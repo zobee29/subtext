@@ -4,9 +4,9 @@
 
 ## Table of Contents
 
-* [Description](#SubText)
-* [Tools](#Tools-Used)
-* [Examples](#Examples)
+* [Description](#subtext)
+* [Tools](#tools-used)
+* [Examples](#examples)
 
 
 # SubText
