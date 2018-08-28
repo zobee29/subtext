@@ -1,12 +1,12 @@
 [logo]: https://github.com/Soul-Potato/subtext/blob/master/public/subText_logo.png "SubText Logo"
 
+![alt text][logo]
+
 ## Table of Contents
 
 * [Description](#SubText)
 * [Tools](#Tools-Used)
 * [Examples](#Examples)
-
-![alt text][logo]
 
 
 # SubText
