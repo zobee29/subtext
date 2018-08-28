@@ -1,6 +1,6 @@
 [logo]: https://github.com/Soul-Potato/subtext/blob/master/public/subText_logo.png "SubText Logo"
 
-![alt text][logo]
+![SubText][logo]
 
 ## Table of Contents
 
@@ -25,3 +25,5 @@
  ## Examples
  
  
+[example1]: https://drive.google.com/drive/u/0/folders/1TSpp8vgjk18angT9eOJh9Ofo7Av8y-6N "User Input"
+![User Input][example1]
