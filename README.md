@@ -25,5 +25,11 @@
  ## Examples
  
  
-[example1]: https://drive.google.com/drive/u/0/folders/1TSpp8vgjk18angT9eOJh9Ofo7Av8y-6N "User Input"
+[example1]: https://postimg.cc/image/ymoyl4h23/ "User Input"
+[example2]: https://postimg.cc/image/hm62cgbqj/ "Negative Input"
+[example3]: https://postimg.cc/image/ocmjlw6m3/ "Neutral Input"
+[example4]: https://postimg.cc/image/qh6wmzfyj/ "Positive Input"
 ![User Input][example1]
+![Negative Input][example2]
+![Neutral Input][example3]
+![Positive Input][example4]
