@@ -4,7 +4,7 @@
 * [Tools](#Tools-Used)
 * [Examples](#Examples)
 
-![SubText]("https://github.com/Soul-Potato/subtext/blob/master/public/subText_logo.png")
+!("https://github.com/Soul-Potato/subtext/blob/master/public/subText_logo.png")
 
 # SubText
 
